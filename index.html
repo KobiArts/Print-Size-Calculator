@@ -203,7 +203,7 @@ input:focus,select:focus{border-color:#6366f1;box-shadow:0 0 0 4px #6366f11c}
 :root{color-scheme:light;--bg:#eef2ff;--card:#fff;--ink:#172554;--muted:#64748b;--line:#dbe4f2;--field:#fff;--soft:#f5f7fc}
 body{background:linear-gradient(135deg,#f5f7ff,#e9efff);color:var(--ink)}
 .compact-header{display:none!important}
-.content{max-width:1320px;padding:0 10px 10px;margin:0 auto}
+.content{max-width:1320px;padding:16px 10px 10px;margin:0 auto}
 .pagehead{display:flex;align-items:center;justify-content:space-between;margin:0 0 8px;padding-top:0}
 .pagehead h1{font-size:27px;line-height:1.25;margin:0;color:var(--ink);letter-spacing:-.5px}
 .theme-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer}
@@ -223,7 +223,7 @@ body{background:linear-gradient(135deg,#f5f7ff,#e9efff);color:var(--ink)}
 .custom-scale{display:block!important}
 .custom-scale input{width:100%}
 .info{display:none!important}
-.column > .card:not(.artwork-card):not(.calculator-card){display:none!important}
+.column > .card:not(.artwork-card):not(.calculator-card):not(.converter-card){display:none!important}
 .calctop{display:block;margin:0 0 9px}
 .calctop .field{width:125px}
 .hint,.lockrow,.ratio{display:none!important}
@@ -251,8 +251,69 @@ body.dark .preset{background:#1b2940;color:#c7d2fe;border-color:#455579}
 body.dark .preset:hover:not(:disabled){background:#4f46e5;color:white}
 body.dark .previewtag{background:#252d4d;color:#c7d2fe}
 body.dark .status{color:#5eead4}
-@media(max-width:760px){.studio-topbar{height:auto;min-height:60px;padding:9px 12px;gap:8px}.studio-brandmark{width:36px;height:36px;flex-basis:36px}.studio-brandname{font-size:13px}.studio-brandtag{font-size:8px}.studio-actions{gap:7px}.support-button{display:none}.ready-indicator{font-size:10px}.studio-topbar .theme-toggle{font-size:10px;padding:7px 8px}.content{padding:0 12px 14px}.pagehead h1{font-size:23px}.pagehead{margin-bottom:9px}.top-results{grid-template-columns:125px 1fr;padding:12px}.top-result-value{font-size:22px}.workspace{grid-template-columns:1fr}.card{height:auto}.previewstage{height:210px}}
-@media(max-width:420px){.theme-toggle{padding:7px 9px;font-size:11px}.pagehead h1{font-size:21px}.top-result-label{font-size:10px}.top-result-value{font-size:19px}.twocol{gap:7px}.preset{padding:7px 10px}}
+.converter-card{height:auto;margin-top:14px}
+.converter-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:end}
+.converter-actions{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.converter-swap{border:1px solid var(--line);background:var(--soft);color:var(--ink);border-radius:9px;padding:9px 12px;font-size:12px;font-weight:750}
+.converter-swap:hover{border-color:#818cf8}
+.converter-result{margin-top:12px;padding:13px 14px;border-radius:11px;background:linear-gradient(110deg,#eef2ff,#f5f3ff);border:1px solid #dbe4ff}
+.converter-result small{display:block;color:#64748b;font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.6px}
+.converter-result strong{display:block;color:#312e81;font-size:22px;line-height:1.3;margin-top:3px;overflow-wrap:anywhere}
+.converter-result span{display:block;color:#64748b;font-size:11px;margin-top:3px}
+body.dark .converter-swap{background:#1b2940;color:#dbeafe;border-color:#455579}
+body.dark .converter-result{background:linear-gradient(110deg,#1b2940,#252449);border-color:#3b4969}
+body.dark .converter-result small,body.dark .converter-result span{color:#a8b6ca}
+body.dark .converter-result strong{color:#c7d2fe}
+@media(max-width:760px){.studio-topbar{height:auto;min-height:60px;padding:9px 12px;gap:8px}.studio-brandmark{width:36px;height:36px;flex-basis:36px}.studio-brandname{font-size:13px}.studio-brandtag{font-size:8px}.studio-actions{gap:7px}.support-button{display:none}.ready-indicator{font-size:10px}.studio-topbar .theme-toggle{font-size:10px;padding:7px 8px}.content{padding:14px 12px 14px}.pagehead h1{font-size:23px}.pagehead{margin-bottom:9px}.top-results{grid-template-columns:125px 1fr;padding:12px}.top-result-value{font-size:22px}.workspace{grid-template-columns:1fr}.card{height:auto}.previewstage{height:210px}}
+@media(max-width:420px){.theme-toggle{padding:7px 9px;font-size:11px}.pagehead h1{font-size:21px}.top-result-label{font-size:10px}.top-result-value{font-size:19px}.twocol,.converter-grid{gap:7px}.preset{padding:7px 10px}.converter-result strong{font-size:19px}}
+
+
+/* Main app tabs */
+.app-tabs{display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--line);margin:0 0 14px;padding:0 2px}
+.app-tab{border:0;background:transparent;color:var(--muted);padding:12px 17px 11px;border-bottom:3px solid transparent;font-size:13px;font-weight:750;display:flex;align-items:center;gap:8px}
+.app-tab:hover{color:#4f46e5;background:#eef2ff80}
+.app-tab.active{color:#4338ca;border-bottom-color:#4f46e5}
+[hidden]{display:none!important}
+.unit-page{max-width:900px;margin:20px auto 30px}
+.unit-intro{margin:0 0 18px}
+.unit-eyebrow{font-size:10px;font-weight:850;letter-spacing:1.5px;color:#4f46e5;margin-bottom:5px}
+.unit-intro h2{font-size:26px;letter-spacing:-.5px;margin:0;color:var(--ink)}
+.unit-intro p{font-size:13px;color:var(--muted);margin:5px 0 0}
+.unit-converter-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 8px 24px rgba(37,57,112,.07)}
+.unit-category-row{max-width:280px;margin-bottom:20px}
+.unit-category-row label,.unit-side label{display:block;font-size:12px;font-weight:750;color:var(--muted);margin-bottom:7px}
+.unit-category-row select,.unit-side select{height:45px;font-size:14px}
+.google-converter{display:grid;grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);gap:13px;align-items:center}
+.unit-side{min-width:0;border:1px solid var(--line);border-radius:12px;padding:13px;background:var(--card)}
+.unit-side select{margin-bottom:12px}
+.unit-side input{width:100%;height:58px;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;color:var(--ink);font-size:28px;font-weight:650;padding:10px 2px 0;outline:none}
+.unit-side input:focus{box-shadow:none;border-color:#818cf8}
+.unit-output{min-height:69px;border-top:1px solid var(--line);padding:12px 2px 0;font-size:28px;font-weight:700;line-height:1.45;color:var(--ink);overflow-wrap:anywhere}
+.google-swap{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:var(--soft);color:#4f46e5;font-size:22px;font-weight:700}
+.google-swap:hover{background:#eef2ff;border-color:#a5b4fc}
+.conversion-equation{font-size:13px;color:var(--muted);margin-top:16px;padding:12px 2px;border-top:1px solid var(--line)}
+.unit-tip{font-size:11px;color:var(--muted);background:var(--soft);border-radius:9px;padding:10px 12px}
+.unit-tip span{color:#4f46e5;margin-right:5px}
+body.dark .app-tabs{border-color:var(--line)}
+body.dark .app-tab{color:var(--muted)}
+body.dark .app-tab.active{color:#c7d2fe;border-bottom-color:#818cf8}
+body.dark .unit-intro h2{color:var(--ink)}
+body.dark .unit-converter-card,body.dark .unit-side{background:var(--card);border-color:var(--line)}
+body.dark .unit-side input{color:var(--ink)}
+body.dark .unit-output{color:var(--ink);border-color:var(--line)}
+body.dark .google-swap{background:#1b2940;color:#c7d2fe;border-color:#455579}
+body.dark .unit-tip{background:#1b2940;color:#a8b6ca}
+@media(max-width:700px){
+ .app-tabs{margin-bottom:12px}
+ .app-tab{padding:11px 12px;font-size:12px}
+ .unit-page{margin:12px auto 24px}
+ .unit-converter-card{padding:15px}
+ .google-converter{grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr);gap:6px}
+ .unit-side{padding:9px}
+ .unit-side select{font-size:11px;padding:0 5px;height:42px}
+ .unit-side input,.unit-output{font-size:22px}
+ .google-swap{width:34px;height:34px;font-size:19px}
+}
 
 </style>
 </head>
@@ -276,6 +337,11 @@ body.dark .status{color:#5eead4}
       <div class="top-result-value" id="topResult">— × —</div>
       <div class="top-result-note">Width × height · update automatically as you adjust dimensions</div>
     </div>
+    <nav class="app-tabs" aria-label="Main sections">
+      <button type="button" class="app-tab active" id="printTab" aria-selected="true">▧ <span>Print size</span></button>
+      <button type="button" class="app-tab" id="unitTab" aria-selected="false">⇄ <span>Unit converter</span></button>
+    </nav>
+    <div id="printTabPanel">
     <div class="workspace">
       <div class="column">
         <section class="card artwork-card">
@@ -316,9 +382,46 @@ body.dark .status{color:#5eead4}
           <div class="fieldgroup custom-scale"><div class="field"><label for="percent">Custom (%)</label><input id="percent" type="number" min=".1" step="any" value="100" disabled></div><input id="factor" type="number" min=".001" step="any" value="1" disabled hidden></div>
           <div class="status" id="status" aria-live="polite"></div>
         </section>
-
       </div>
     </div>
+    </div>
+    <section class="unit-page" id="unitTabPanel" hidden aria-label="Unit converter">
+      <div class="unit-intro">
+        <div class="unit-eyebrow">QUICK CONVERSIONS</div>
+        <h2>Unit converter</h2>
+        <p>Convert measurements instantly, with results updating as you type.</p>
+      </div>
+      <div class="unit-converter-card">
+        <div class="unit-category-row">
+          <label for="convertCategory">Measurement type</label>
+          <select id="convertCategory" aria-label="Measurement type">
+            <option value="length">Length</option>
+            <option value="area">Area</option>
+            <option value="volume">Volume</option>
+            <option value="mass">Weight</option>
+            <option value="temperature">Temperature</option>
+            <option value="speed">Speed</option>
+            <option value="time">Time</option>
+            <option value="data">Data</option>
+          </select>
+        </div>
+        <div class="google-converter">
+          <div class="unit-side">
+            <label for="convertFrom">From</label>
+            <select id="convertFrom" aria-label="Convert from"></select>
+            <input id="convertValue" type="number" step="any" value="1" inputmode="decimal" aria-label="Value to convert">
+          </div>
+          <button type="button" class="google-swap" id="swapUnits" aria-label="Swap units" title="Swap units">⇄</button>
+          <div class="unit-side">
+            <label for="convertTo">To</label>
+            <select id="convertTo" aria-label="Convert to"></select>
+            <div class="unit-output" id="convertResult" aria-live="polite">12</div>
+          </div>
+        </div>
+        <div class="conversion-equation" id="convertFormula">1 foot = 12 inches</div>
+        <div class="unit-tip"><span>ⓘ</span> Results are calculated on your device. No internet connection is required.</div>
+      </div>
+    </section>
     <div class="footer">Print Size Studio · Works offline</div>
   </main>
 </div>
@@ -406,6 +509,54 @@ document.querySelectorAll('.preset').forEach(b=>b.addEventListener('click',()=>a
 $('outunit').addEventListener('change',()=>{if(original)applyScale(multiplier)});
 $('unit').addEventListener('change',updateOriginalLabels);
 $('dpi').addEventListener('change',()=>{if(original&&$('file').files[0])readFile($('file').files[0])});
+// Offline unit converter with common measurement categories.
+ const convertValue=$('convertValue'),convertFrom=$('convertFrom'),convertTo=$('convertTo'),convertCategory=$('convertCategory');
+ const unitSets={
+  length:{units:{m:'Metre (m)',km:'Kilometre (km)',cm:'Centimetre (cm)',mm:'Millimetre (mm)',mi:'Mile (mi)',yd:'Yard (yd)',ft:'Foot (ft)',in:'Inch (in)'},base:{m:1,km:1000,cm:.01,mm:.001,mi:1609.344,yd:.9144,ft:.3048,in:.0254}},
+  area:{units:{m2:'Square metre (m²)',km2:'Square kilometre (km²)',cm2:'Square centimetre (cm²)',ha:'Hectare (ha)',acre:'Acre',ft2:'Square foot (ft²)',in2:'Square inch (in²)'},base:{m2:1,km2:1e6,cm2:.0001,ha:10000,acre:4046.8564224,ft2:.09290304,in2:.00064516}},
+  volume:{units:{l:'Litre (L)',ml:'Millilitre (mL)',m3:'Cubic metre (m³)',cm3:'Cubic centimetre (cm³)',gal:'US gallon (gal)',qt:'US quart (qt)',cup:'US cup',floz:'US fluid ounce (fl oz)'},base:{l:1,ml:.001,m3:1000,cm3:.001,gal:3.785411784,qt:.946352946,cup:.2365882365,floz:.02957352956}},
+  mass:{units:{kg:'Kilogram (kg)',g:'Gram (g)',mg:'Milligram (mg)',t:'Metric tonne (t)',lb:'Pound (lb)',oz:'Ounce (oz)',st:'Stone (st)'},base:{kg:1,g:.001,mg:.000001,t:1000,lb:.45359237,oz:.028349523125,st:6.35029318}},
+  temperature:{units:{c:'Celsius (°C)',f:'Fahrenheit (°F)',k:'Kelvin (K)' }},
+  speed:{units:{ms:'Metre per second (m/s)',kmh:'Kilometre per hour (km/h)',mph:'Mile per hour (mph)',knot:'Knot (kn)'},base:{ms:1,kmh:1/3.6,mph:.44704,knot:.514444}},
+  time:{units:{s:'Second (s)',ms:'Millisecond (ms)',min:'Minute (min)',h:'Hour (h)',day:'Day',week:'Week',year:'Year (365 days)'},base:{s:1,ms:.001,min:60,h:3600,day:86400,week:604800,year:31536000}},
+  data:{units:{B:'Byte (B)',KB:'Kilobyte (KB)',MB:'Megabyte (MB)',GB:'Gigabyte (GB)',TB:'Terabyte (TB)',bit:'Bit (bit)'},base:{B:1,KB:1000,MB:1e6,GB:1e9,TB:1e12,bit:.125}}
+ };
+ const unitNames=()=>unitSets[convertCategory.value].units;
+ function populateUnits(){
+  const units=unitNames(),keys=Object.keys(units),oldFrom=convertFrom.value,oldTo=convertTo.value;
+  convertFrom.innerHTML='';convertTo.innerHTML='';
+  keys.forEach(k=>{convertFrom.add(new Option(units[k],k));convertTo.add(new Option(units[k],k));});
+  convertFrom.value=keys.includes(oldFrom)?oldFrom:keys[0];
+  convertTo.value=keys.includes(oldTo)?oldTo:keys[Math.min(1,keys.length-1)];
+  updateUnitConversion();
+ }
+ function toBase(v,u,category){
+  if(category==='temperature')return u==='c'?v:u==='f'?(v-32)*5/9:v-273.15;
+  return v*unitSets[category].base[u];
+ }
+ function fromBase(v,u,category){
+  if(category==='temperature')return u==='c'?v:u==='f'?v*9/5+32:v+273.15;
+  return v/unitSets[category].base[u];
+ }
+ function updateUnitConversion(){
+  const value=Number(convertValue.value),from=convertFrom.value,to=convertTo.value,category=convertCategory.value;
+  if(convertValue.value.trim()===''||!Number.isFinite(value)){
+   $('convertResult').textContent='—';$('convertFormula').textContent='Enter a number to convert.';return;
+  }
+  const result=fromBase(toBase(value,from,category),to,category);
+  const u=unitNames(),sym=k=>{const m=u[k].match(/\(([^)]+)\)/);return m?m[1]:u[k]};
+  const resultText=fmt(result,8)+' '+sym(to);
+  $('convertResult').textContent=resultText;
+  $('convertFormula').textContent=fmt(value,8)+' '+sym(from)+' = '+resultText;
+ }
+ convertCategory.addEventListener('change',populateUnits);
+ [convertValue,convertFrom,convertTo].forEach(el=>{el.addEventListener('input',updateUnitConversion);el.addEventListener('change',updateUnitConversion)});
+ $('swapUnits').addEventListener('click',()=>{const oldFrom=convertFrom.value;convertFrom.value=convertTo.value;convertTo.value=oldFrom;updateUnitConversion();});
+ populateUnits();convertFrom.value='ft';convertTo.value='in';updateUnitConversion();
+const tabMap={printTab:'printTabPanel',unitTab:'unitTabPanel'},banner=document.querySelector('.top-results');
+function showTab(id){Object.keys(tabMap).forEach(t=>{const on=t===id;$(t).classList.toggle('active',on);$(t).setAttribute('aria-selected',on);$(tabMap[t]).hidden=!on});if(banner)banner.hidden=id!=='printTab'}
+Object.keys(tabMap).forEach(t=>$(t).addEventListener('click',()=>showTab(t)));
+showTab('printTab');
 const themeToggle=$('themeToggle'),themeIcon=$('themeIcon'),themeText=$('themeText');
 function setTheme(mode){const dark=mode==='dark';document.body.classList.toggle('dark',dark);if(themeIcon)themeIcon.textContent=dark?'☀':'☾';if(themeText)themeText.textContent=dark?'Light mode':'Dark mode';if(themeToggle)themeToggle.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');try{localStorage.setItem('printSizeTheme',mode)}catch(e){}}
 let savedTheme='light';try{savedTheme=localStorage.getItem('printSizeTheme')||'light'}catch(e){}setTheme(savedTheme);
