@@ -281,9 +281,9 @@ body.dark .status{color:#5eead4}
         <section class="card artwork-card">
           <div class="cardhead"><div><div class="cardtitle">Artwork preview</div></div><span class="previewtag" id="previewtag">No file selected</span></div>
           <label class="dropzone" id="drop" for="file">
-            <div class="uploadicon">↑</div><strong>Drop artwork here or browse files</strong><small>PDF · JPG · JPEG · PNG · TIFF</small>
+            <div class="uploadicon">↑</div><strong>Drop artwork here or browse files</strong><small>JPG · JPEG · PNG · Works offline</small>
           </label>
-          <input id="file" type="file" accept=".pdf,.jpg,.jpeg,.png,.tif,.tiff,application/pdf,image/jpeg,image/png,image/tiff">
+          <input id="file" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png">
           <div class="previewstage" id="previewstage">
             <img id="previewimg" alt="Uploaded artwork preview">
             <canvas id="previewcanvas"></canvas>
@@ -293,7 +293,7 @@ body.dark .status{color:#5eead4}
           <div class="fileline" id="fileline"><div class="filebadge" id="filebadge">FILE</div><div style="min-width:0"><div class="filename" id="filename"></div><div class="filemeta" id="filemeta"></div></div></div>
           <div class="error" id="error"></div>
           <div class="twocol fieldgroup"><div class="field"><label for="unit">Original size unit</label><select id="unit"><option value="in">Inches (in)</option><option value="ft">Feet (ft)</option><option value="mm">Millimetres (mm)</option><option value="cm">Centimetres (cm)</option><option value="m">Metres (m)</option></select></div><div class="field"><label for="dpi">Image resolution (DPI)</label><input id="dpi" type="number" min="1" max="9600" value="300"></div></div>
-          <div class="info"><span class="infoicon">ⓘ</span><span>PDF page dimensions are read directly. JPG, PNG and TIFF physical size uses the DPI above (default 300).</span></div>
+          <div class="info"><span class="infoicon">ⓘ</span><span>JPG, JPEG and PNG files are processed directly on your device. Set the DPI below when needed (default 300).</span></div>
         </section>
         <section class="card">
           <div class="cardhead"><div class="step">02</div><div><div class="cardtitle">Detected original dimensions</div><div class="carddesc">Measurements from the uploaded file</div></div></div>
@@ -319,17 +319,14 @@ body.dark .status{color:#5eead4}
 
       </div>
     </div>
-    <div class="footer">Print Size Calculator</div>
+    <div class="footer">Print Size Studio · Works offline</div>
   </main>
 </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/utif@3.1.0/UTIF.min.js"></script>
 <script>
 (()=> {
 const $=id=>document.getElementById(id), factors={in:1,ft:1/12,mm:25.4,cm:2.54,m:.0254}, labels={in:'in',ft:'ft',mm:'mm',cm:'cm',m:'m'};
 let original=null,aspect=0,multiplier=1,kind='',activeObjectUrl=null;
-if(window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 const fmt=(n,d=3)=>Number.isFinite(n)?Number(n.toFixed(d)).toLocaleString(undefined,{maximumFractionDigits:d}):'—';
 const inches=(v,u)=>v/factors[u], convert=(v,u)=>v*factors[u];
 const validUnit=u=>Object.prototype.hasOwnProperty.call(factors,u);
@@ -370,28 +367,15 @@ function setFile(w,h,pixels,type,file,meta,pages=''){
 function dpi(){const n=Number($('dpi').value);return n>0&&n<=9600?n:300}
 function clearPreview(){ $('previewimg').style.display='none';$('previewcanvas').style.display='none';$('emptypreview').style.display='block';$('previewtag').textContent='Preview unavailable';$('previewdetail').textContent='No preview available';$('previewpages').textContent='';}
 function showImagePreview(file){if(activeObjectUrl)URL.revokeObjectURL(activeObjectUrl);activeObjectUrl=URL.createObjectURL(file);$('previewcanvas').style.display='none';$('emptypreview').style.display='none';const img=$('previewimg');img.onload=()=>{img.style.display='block'};img.onerror=()=>clearPreview();img.src=activeObjectUrl;}
-async function showPdfPreview(pdf){const page=await pdf.getPage(1),viewport=page.getViewport({scale:1.15}),canvas=$('previewcanvas'),ctx=canvas.getContext('2d');canvas.width=viewport.width;canvas.height=viewport.height;await page.render({canvasContext:ctx,viewport}).promise;$('previewimg').style.display='none';$('emptypreview').style.display='none';canvas.style.display='block';}
-async function showTiffPreview(buffer,ifd){const rgba=UTIF.toRGBA8(ifd),canvas=$('previewcanvas'),ctx=canvas.getContext('2d');canvas.width=ifd.width;canvas.height=ifd.height;const data=new ImageData(new Uint8ClampedArray(rgba),ifd.width,ifd.height);ctx.putImageData(data,0,0);$('previewimg').style.display='none';$('emptypreview').style.display='none';canvas.style.display='block';}
 async function readFile(file){
  clearError();$('status').textContent='Reading artwork…';clearPreview();
  const ext=(file.name.split('.').pop()||'').toLowerCase();
  try{
-  if(ext==='pdf'||file.type==='application/pdf'){
-   if(!window.pdfjsLib)throw Error('PDF reader could not load. Check your internet connection and try again.');
-   const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise,page=await pdf.getPage(1),v=page.view,wp=Math.abs(v[2]-v[0]),hp=Math.abs(v[3]-v[1]);
-   setFile(wp/72,hp/72,'PDF · '+pdf.numPages+' page(s)','PDF',file,fmt(wp/72,3)+' × '+fmt(hp/72,3)+' inches · first page',pdf.numPages+' page(s)');
-   await showPdfPreview(pdf);
-  }else if(['tif','tiff'].includes(ext)||file.type==='image/tiff'){
-   if(!window.UTIF)throw Error('TIFF reader could not load. Check your internet connection and try again.');
-   const buf=await file.arrayBuffer(),ifds=UTIF.decode(buf);if(!ifds||!ifds.length)throw Error('No TIFF image page was found.');
-   const ifd=ifds[0],w=ifd.width,h=ifd.height,d=dpi();
-   setFile(w/d,h/d,w+' × '+h+' px','TIFF',file,fmt(w/d,3)+' × '+fmt(h/d,3)+' inches at '+d+' DPI',ifds.length>1?ifds.length+' frame(s) · first shown':'');
-   await showTiffPreview(buf,ifd);
-  }else if(['jpg','jpeg','png'].includes(ext)||/^image\/(jpeg|png)$/.test(file.type)){
+  if(['jpg','jpeg','png'].includes(ext)||/^image\/(jpeg|png)$/.test(file.type)){
    const bmp=await createImageBitmap(file),w=bmp.width,h=bmp.height;bmp.close();const d=dpi();
    setFile(w/d,h/d,w+' × '+h+' px',ext.toUpperCase(),file,fmt(w/d,3)+' × '+fmt(h/d,3)+' inches at '+d+' DPI');
    showImagePreview(file);
-  }else throw Error('Please upload PDF, JPG, JPEG, PNG or TIFF.');
+  }else throw Error('For offline use, please upload a JPG, JPEG or PNG image. PDF and TIFF support needs additional reader files.');
  }catch(e){showError(e.message||'Unable to read this file.');$('status').textContent='';}
 }
 $('file').addEventListener('change',e=>{if(e.target.files[0])readFile(e.target.files[0])});
@@ -421,7 +405,7 @@ $('percent').addEventListener('input',()=>applyScale(Number($('percent').value)/
 document.querySelectorAll('.preset').forEach(b=>b.addEventListener('click',()=>applyScale(Number(b.dataset.f))));
 $('outunit').addEventListener('change',()=>{if(original)applyScale(multiplier)});
 $('unit').addEventListener('change',updateOriginalLabels);
-$('dpi').addEventListener('change',()=>{if(original&&kind!=='PDF'&&$('file').files[0])readFile($('file').files[0])});
+$('dpi').addEventListener('change',()=>{if(original&&$('file').files[0])readFile($('file').files[0])});
 const themeToggle=$('themeToggle'),themeIcon=$('themeIcon'),themeText=$('themeText');
 function setTheme(mode){const dark=mode==='dark';document.body.classList.toggle('dark',dark);if(themeIcon)themeIcon.textContent=dark?'☀':'☾';if(themeText)themeText.textContent=dark?'Light mode':'Dark mode';if(themeToggle)themeToggle.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');try{localStorage.setItem('printSizeTheme',mode)}catch(e){}}
 let savedTheme='light';try{savedTheme=localStorage.getItem('printSizeTheme')||'light'}catch(e){}setTheme(savedTheme);

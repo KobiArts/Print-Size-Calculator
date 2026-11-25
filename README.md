@@ -1,23 +1,23 @@
-# Print Size Studio
+# Print Size Studio — Offline & GitHub Pages
 
-A static, browser-based print size calculator for artwork.
+A static print-size calculator that runs in a modern browser. The application has no external JavaScript, CDN, font, or network dependencies.
 
-## Files
+## Offline use
 
-- `index.html` — complete application.
-- `.nojekyll` — disables Jekyll processing on GitHub Pages.
+1. Download and extract this folder.
+2. Open `index.html` in Chrome, Edge, Firefox, or another modern browser.
+3. Upload a JPG, JPEG, or PNG file.
+4. Choose the output unit and adjust the width, height, or custom scale.
 
-## Run locally
+Image processing and calculations happen locally in your browser. Your artwork is not uploaded to a server. The calculator uses the DPI value shown in the app (300 by default) to estimate physical dimensions from image pixels.
 
-Open `index.html` in a modern browser. PDF and TIFF previews use CDN-hosted libraries, so an internet connection is required for those formats. JPG, JPEG, and PNG previews work in the browser.
+**Offline format support:** JPG, JPEG, and PNG. PDF and TIFF are not included in this offline edition because their reader libraries are not bundled.
 
-## Host on GitHub Pages
+## GitHub Pages hosting
 
-1. Create a new GitHub repository.
-2. Upload `index.html` and `.nojekyll` to the repository root.
+1. Create a GitHub repository.
+2. Upload `index.html`, `README.md`, and `.nojekyll` to the repository root.
 3. Open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select your main branch and the `/ (root)` folder, then save.
-6. Wait for GitHub Pages to publish the site; open the URL shown in the Pages settings.
+4. Choose **Deploy from a branch**, select `main` and `/(root)`, then save.
 
-No build step or server is required.
+The same `index.html` works when opened directly from your computer and when hosted on GitHub Pages. No build step or installation is needed.
